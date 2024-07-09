@@ -1,0 +1,17 @@
+.iml
+.project
+.classpath
+.settings
+.factorypath
+*.swp
+.DS_Store
+.svn
+.idea
+target
+jars
+plugins
+build
+docs/package-lock.json
+docs/package.json
+docs/node_modules/
+
