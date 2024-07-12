@@ -12,9 +12,9 @@
 		<relativePath />
 	</parent>
 
-	<groupId>io.github.nlScript</groupId>
+	<groupId>io.github.nlscript</groupId>
 	<artifactId>nlScript-microscope-language</artifactId>
-	<version>0.1</version>
+	<version>0.1.0</version>
 
 	<name>nlScript Microscope Language</name>
 	<description>Use nlScript to develop a language based on natural English syntax to control microscope acquisition pipelines.</description>
@@ -87,10 +87,28 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>io.github.nlScript</groupId>
+			<groupId>io.github.nlscript</groupId>
 			<artifactId>nlScript</artifactId>
-			<version>0.1</version>
+			<version>0.1.0</version>
 		</dependency>
 	</dependencies>
+
+        <build>
+                <plugins>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-javadoc-plugin</artifactId>
+                                <executions>
+                                        <execution>
+                                                <id>attach-javadocs</id>
+                                                <goals>
+                                                        <goal>jar</goal>
+                                                </goals>
+                                        </execution>
+                                </executions>
+                        </plugin>
+                </plugins>
+        </build>
+
 
 </project>
