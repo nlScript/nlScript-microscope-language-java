@@ -11,3 +11,9 @@ More information about how to use nlScript to develop custom natural language in
 - https://github.com/nlScript/nlScript-java
 
 You can interactively try the language at https://nlScript.github.io/nlScript-js.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+

@@ -30,7 +30,7 @@
 
 	<licenses>
 		<license>
-			<name>Simplified BSD License</name>
+			<name>MIT License</name>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -80,7 +80,7 @@
 	</ciManagement>
 
 	<properties>
-		<license.licenseName>bsd_2</license.licenseName>
+		<license.licenseName>mit</license.licenseName>
 		<license.copyrightOwners>Benjamin Schmid</license.copyrightOwners>
 	</properties>
 
