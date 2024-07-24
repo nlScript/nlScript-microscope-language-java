@@ -9,6 +9,25 @@ import java.util.Locale;
 
 public class Microscope {
 
+	public interface AcquisiitonListener {
+		public void acquire(Position p, Channel c);
+	}
+
+	private final ArrayList<AcquisiitonListener> listeners = new ArrayList<>();
+
+	public void addAcquisitionListener(AcquisiitonListener l) {
+		listeners.add(l);
+	}
+
+	public void removeAcquisitionListener(AcquisiitonListener l) {
+		listeners.remove(l);
+	}
+
+	private void fireAcquire(Position p, Channel c) {
+		for(AcquisiitonListener l : listeners)
+			l.acquire(p, c);
+	}
+
 	public enum LED {
 		LED_385(385),
 		LED_470(470),
@@ -41,7 +60,7 @@ public class Microscope {
 	}
 
 	public static class Channel {
-		private final String name;
+		public final String name;
 		private final List<LEDSetting> ledSettings;
 		private int exposureTime;
 
@@ -256,6 +275,10 @@ public class Microscope {
 		this.magnificationChanger = mag;
 	}
 
+	public Binning getBinning() {
+		return binning;
+	}
+
 	public void setBinning(Binning binning) {
 		this.binning = binning;
 	}
@@ -285,35 +308,7 @@ public class Microscope {
 	}
 
 	public void acquireSinglePositionAndChannel(Position position, Channel channel) {
-		Date currentDate = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy, HH:mm:ss", new Locale("en", "US"));
-		String timeStamp = dateFormat.format(currentDate);
-
-		System.out.println(timeStamp);
-		System.out.println("======================");
-		System.out.println("Stage position: " + position.name);
-		System.out.println("  - " + position.center);
-		System.out.println();
-		System.out.println("Channel settings: " + channel.name);
-		System.out.println("  - Exposure time: " + channel.exposureTime + "ms");
-		for(LED led : LED.values()) {
-            LEDSetting ledSetting = channel.getLEDSetting(led);
-			if(ledSetting != null)
-				System.out.println("  - LED " + led.WAVELENGTH + ": " + ledSetting.intensity + "%");
-		}
-		System.out.println();
-		System.out.println("Optics:");
-		System.out.println("  - Lens: " + this.lens);
-		System.out.println("  - Mag.Changer: " + this.magnificationChanger);
-		System.out.println("  - Binning: " + this.binning);
-		System.out.println();
-		System.out.println("Incubation:");
-		System.out.println("  - Temperature: " + this.getTemperature() + "C");
-		System.out.println("  - CO2 concentration: " + this.getCO2Concentration() + "%");
-		System.out.println();
-		System.out.println("Acquire stack");
-		System.out.println();
-		System.out.println();
+		fireAcquire(position, channel);
 	}
 
 }

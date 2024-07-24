@@ -18,7 +18,7 @@ public class LanguageControl {
 		return Arrays.copyOf((Object[]) data, ((Object[]) data).length, type);
 	}
 
-	private final Microscope microscope;
+	public final Microscope microscope;
 
 	private final Timeline<Runnable> timeline = new Timeline<>();
 
