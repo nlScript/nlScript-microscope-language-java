@@ -30,9 +30,14 @@ public class Interpolator {
 	}
 
 	public void interpolate(int cycle) {
+		if(cycle == this.nCycles - 1) {
+			setter.set(cycle, vTo);
+			return;
+		}
+
 		if(cycle == 0)
 			initialize();
-		double interpolated = vFrom + (cycle + 1) * (vTo - vFrom) / nCycles;
+		double interpolated = vFrom + cycle * (vTo - vFrom) / (nCycles - 1);
 		setter.set(cycle, interpolated);
 	}
 
