@@ -10,7 +10,7 @@ More information about how to use nlScript to develop custom natural language in
 - https://nlScript.github.io/nlScript-java
 - https://github.com/nlScript/nlScript-java
 
-You can interactively try the language at https://nlScript.github.io/nlScript-js.
+You can interactively try the language at https://nlScript.github.io/nlScript-microscope-language-js.
 
 
 ## License
