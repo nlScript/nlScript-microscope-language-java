@@ -12,6 +12,13 @@ More information about how to use nlScript to develop custom natural language in
 
 You can interactively try the language at https://nlScript.github.io/nlScript-microscope-language-js.
 
+## Installation
+With Maven:
+```
+<groupId>io.github.nlscript</groupId>
+<artifactId>nlScript-microscope-language</artifactId>
+<version>0.1.0</version>
+```
 
 ## License
 
