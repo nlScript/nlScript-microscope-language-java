@@ -20,6 +20,12 @@ With Maven:
 <version>0.1.0</version>
 ```
 
+## Execution
+with Maven:
+```
+mvn compile exec:java -Dexec.mainClass="nlScript.mic.Main"
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
