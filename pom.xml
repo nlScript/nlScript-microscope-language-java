@@ -14,7 +14,7 @@
 
 	<groupId>io.github.nlscript</groupId>
 	<artifactId>nlScript-microscope-language</artifactId>
-	<version>0.1.0</version>
+	<version>0.2.0</version>
 
 	<name>nlScript Microscope Language</name>
 	<description>Use nlScript to develop a language based on natural English syntax to control microscope acquisition pipelines.</description>
@@ -89,7 +89,7 @@
 		<dependency>
 			<groupId>io.github.nlscript</groupId>
 			<artifactId>nlScript</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0</version>
 		</dependency>
 	</dependencies>
 
