@@ -17,7 +17,7 @@ With Maven:
 ```
 <groupId>io.github.nlscript</groupId>
 <artifactId>nlScript-microscope-language</artifactId>
-<version>0.1.0</version>
+<version>0.3.0</version>
 ```
 
 ## Execution
