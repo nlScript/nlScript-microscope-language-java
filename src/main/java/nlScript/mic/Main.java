@@ -1,16 +1,44 @@
 package nlScript.mic;
 
+import java.awt.Color;
 import nlScript.Parser;
 import nlScript.ui.ACEditor;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Window;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 		LanguageControl lc = new LanguageControl();
 		Parser parser = lc.initParser();
 		ACEditor editor = new ACEditor(parser);
@@ -55,5 +83,75 @@ public class Main {
 		editor.setBeforeRun(lc::reset);
 		editor.setAfterRun(() -> lc.getTimeline().process(Runnable::run));
 		editor.setVisible(true);
+
+		editor.getTextArea().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!e.isControlDown())
+					return;
+				Point p = e.getPoint();
+				SwingUtilities.convertPointToScreen(p, editor.getTextArea());
+				showAIAutocompletion(editor, p.x, p.y);
+			}
+		});
+	}
+
+	public static void showAIAutocompletion(ACEditor editor, int x, int y) {
+		JDialog dialog = new JDialog(editor.getFrame());
+		JTextArea ta = new JTextArea(2, 30);
+		Font taFont = UIManager.getFont("Label.font");
+		if(taFont != null)
+			ta.setFont(taFont.deriveFont((float) ta.getFont().getSize()));
+
+		ta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER && e.isControlDown()) {
+					final AtomicInteger caret = new AtomicInteger(editor.getTextArea().getCaretPosition());
+					String context = editor.getText().substring(0, caret.get());
+					String sentence = ta.getText();
+					dialog.dispose();
+					new Thread(() -> {
+						Ollama ollama = new Ollama();
+						try {
+							boolean prev = editor.isAutocompletionEnabled();
+							editor.setAutocompletionEnabled(false);
+							ollama.query(context, sentence, s -> {
+								System.out.print(s);
+								try {
+									editor.getTextArea().getDocument().insertString(caret.getAndAdd(s.length()), s, null);
+								} catch (BadLocationException ex) {
+									throw new RuntimeException(ex);
+								}
+							});
+							editor.setAutocompletionEnabled(prev);
+						} catch(Exception ex) {
+							ex.printStackTrace(); // TODO
+						}
+					}).start();
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					dialog.dispose();
+				}
+			}
+		});
+		ta.setBorder(null);
+		ta.setLineWrap(true);
+		JScrollPane scroll = new JScrollPane(ta);
+		ResizableUndecoratedFrame.makeUndecoratedResizable(dialog);
+		dialog.setModal(true);
+		dialog.getContentPane().add(scroll);
+
+		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		buttons.setBackground(Color.GRAY);
+		buttons.setBorder(ta.getBorder());
+		JLabel label = new JLabel("Press Ctrl-Enter to confirm or Esc to cancel");
+		label.setForeground(Color.WHITE);
+		buttons.add(label);
+
+		dialog.getContentPane().add(buttons, BorderLayout.SOUTH);
+		dialog.pack();
+		dialog.setLocation(x, y);
+		dialog.setVisible(true);
 	}
 }
