@@ -159,6 +159,7 @@ public class Main implements PlugIn {
 					dialog.dispose();
 					new Thread(() -> {
 						Ollama ollama = new Ollama();
+						editor.getFrame().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 						try {
 							boolean prev = editor.isAutocompletionEnabled();
 							editor.setAutocompletionEnabled(false);
@@ -173,6 +174,8 @@ public class Main implements PlugIn {
 							editor.setAutocompletionEnabled(prev);
 						} catch(Exception ex) {
 							IJ.handleException(ex);
+						} finally {
+							editor.getFrame().setCursor(Cursor.getDefaultCursor());
 						}
 					}).start();
 				}
