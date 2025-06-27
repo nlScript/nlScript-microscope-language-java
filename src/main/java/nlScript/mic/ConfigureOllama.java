@@ -1,5 +1,7 @@
 package nlScript.mic;
 
+import ij.IJ;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import javax.swing.text.SimpleAttributeSet;
@@ -228,7 +230,7 @@ public class ConfigureOllama {
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace(); // TODO
+			IJ.handleException(e);
 			return false;
 		}
 	}

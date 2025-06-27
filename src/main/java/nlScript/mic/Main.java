@@ -1,29 +1,30 @@
 package nlScript.mic;
 
-import java.awt.Color;
+import java.awt.*;
+
+import ij.IJ;
+import ij.plugin.PlugIn;
 import nlScript.Parser;
 import nlScript.ui.ACEditor;
 
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
@@ -31,8 +32,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Main {
+public class Main implements PlugIn {
+
 	public static void main(String[] args) {
+		new ij.ImageJ();
+		run();
+	}
+
+	public void run(String args) {
+		run();
+	}
+
+	public static void run() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -126,7 +137,7 @@ public class Main {
 							});
 							editor.setAutocompletionEnabled(prev);
 						} catch(Exception ex) {
-							ex.printStackTrace(); // TODO
+							IJ.handleException(ex);
 						}
 					}).start();
 				}
