@@ -77,7 +77,7 @@ public class Main {
 			out.println();
 			out.println();
 			out.close();
-			editor.getOutputArea().setText(editor.getOutputArea().getText() + bos.toString());
+			editor.getOutputArea().setText(editor.getOutputArea().getText() + bos);
 		});
 
 		editor.setBeforeRun(lc::reset);
