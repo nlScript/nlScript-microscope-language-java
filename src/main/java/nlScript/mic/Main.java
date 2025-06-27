@@ -54,6 +54,41 @@ public class Main implements PlugIn {
 		Parser parser = lc.initParser();
 		ACEditor editor = new ACEditor(parser);
 
+		JComponent glassPane = (JComponent) editor.getFrame().getGlassPane();
+		glassPane.setLayout(null);
+		glassPane.setOpaque(false);
+
+		JLabel hint = new JLabel("Ctrl-click for AI-assisted input");
+		hint.setForeground(Color.GRAY);
+		hint.setBackground(Color.WHITE);
+		hint.setOpaque(true);
+		hint.setFont(new Font("Arial", Font.BOLD, 12));
+		glassPane.add(hint);
+		glassPane.setVisible(true);
+
+
+		final ActionListener hideListener = e -> {
+			glassPane.setVisible(false);
+		};
+		final Timer timer = new Timer(500, hideListener);
+		timer.setRepeats(false);
+		editor.getTextArea().addMouseMotionListener(new MouseMotionAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				timer.restart();
+				Point p = SwingUtilities.convertPoint(
+						e.getComponent(), e.getPoint(), glassPane
+				);
+				Dimension labelSize = hint.getPreferredSize();
+
+				// Offset to keep label fully visible
+				int x = p.x + 10;
+				int y = p.y + 10;
+				hint.setBounds(x, y, labelSize.width, labelSize.height);
+				if(!glassPane.isVisible())
+					glassPane.setVisible(true);
+			}
+		});
+
 		Microscope mic = lc.microscope;
 		mic.addAcquisitionListener((position, channel) -> {
 			Date currentDate = new Date();
