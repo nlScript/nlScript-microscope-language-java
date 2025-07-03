@@ -10,7 +10,9 @@ More information about how to use nlScript to develop custom natural language in
 - https://nlScript.github.io/nlScript-java
 - https://github.com/nlScript/nlScript-java
 
-You can interactively try the language at https://nlScript.github.io/nlScript-microscope-language-js.
+This plugin also contains AI-support (https://github.com/nlScript/nlScript-llm)
+
+You can interactively try the language (without AI-support) at https://nlScript.github.io/nlScript-microscope-language-js.
 
 ## Installation
 With Maven:
@@ -20,11 +22,22 @@ With Maven:
 <version>0.4.0</version>
 ```
 
+With Fiji:
+
+To make testing it easy, `nlScript-microscope-language` is also available as a Fiji (https://fiji.sc) plugin:
+
+* Download the binary version from the GitHub [Releases](https://github.com/nlScript/nlScript-microscope-language-java/releases) page
+* Copy it into Fiji's `plugins` folder (`Path-to-Fiji/plugins/`)
+* Restart Fiji
+
 ## Execution
 with Maven:
 ```
 mvn compile exec:java -Dexec.mainClass="nlScript.mic.Main"
 ```
+with Fiji:
+
+Click on `Plugins>nlScript>Microscope language demo`
 
 ## License
 
