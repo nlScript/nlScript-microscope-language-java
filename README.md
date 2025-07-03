@@ -15,14 +15,14 @@ This plugin also contains AI-support (https://github.com/nlScript/nlScript-llm)
 You can interactively try the language (without AI-support) at https://nlScript.github.io/nlScript-microscope-language-js.
 
 ## Installation
-With Maven:
+#### With Maven:
 ```
 <groupId>io.github.nlscript</groupId>
 <artifactId>nlScript-microscope-language</artifactId>
 <version>0.4.0</version>
 ```
 
-With Fiji:
+#### With Fiji:
 
 To make testing it easy, `nlScript-microscope-language` is also available as a Fiji (https://fiji.sc) plugin:
 
@@ -31,11 +31,11 @@ To make testing it easy, `nlScript-microscope-language` is also available as a F
 * Restart Fiji
 
 ## Execution
-with Maven:
+#### With Maven:
 ```
 mvn compile exec:java -Dexec.mainClass="nlScript.mic.Main"
 ```
-with Fiji:
+#### With Fiji:
 
 Click on `Plugins>nlScript>Microscope language demo`
 
